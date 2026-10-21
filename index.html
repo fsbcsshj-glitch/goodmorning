@@ -2,145 +2,316 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Good Morning ♡</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Good Morning 🌹</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
-background:#050008;
-color:#ff8acb;
-height:100dvh;
-overflow:hidden;
-font-family:Georgia,serif;
+ min-height:100vh;
+ overflow:hidden;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:radial-gradient(ellipse at 50% 65%,
+ #6e2448 0%,#25132f 48%,#070d20 100%);
+ color:white;
+ font-family:Georgia,serif;
 }
 
-canvas{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
+.scene{
+ position:relative;
+ width:100%;
+ max-width:430px;
+ height:100svh;
+ min-height:560px;
+ overflow:hidden;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
 }
 
-.message{
-position:absolute;
-bottom:7%;
-left:0;
-width:100%;
-text-align:center;
-font-size:clamp(20px,6vw,32px);
-color:#ffe1f3;
-text-shadow:0 0 8px #ff4fa9,0 0 22px #ff168d;
-animation:glow 2s infinite alternate;
-letter-spacing:1px;
+.stars{
+ position:absolute;
+ inset:0;
+ background-image:
+ radial-gradient(2px 2px at 15% 18%,#fff 60%,transparent),
+ radial-gradient(2px 2px at 80% 12%,#ffdca2 60%,transparent),
+ radial-gradient(1px 1px at 65% 30%,#fff 60%,transparent),
+ radial-gradient(2px 2px at 25% 42%,#ffb8d0 60%,transparent),
+ radial-gradient(1px 1px at 90% 55%,#fff 60%,transparent),
+ radial-gradient(2px 2px at 12% 72%,#ffe2a0 60%,transparent),
+ radial-gradient(1px 1px at 72% 80%,#fff 60%,transparent);
+ animation:twinkle 2s ease-in-out infinite alternate;
 }
 
-@keyframes glow{
-from{opacity:.75;text-shadow:0 0 8px #ff4fa9}
-to{opacity:1;text-shadow:0 0 18px #ff4fa9,0 0 35px #ff168d}
+.moon{
+ position:absolute;
+ top:9%;
+ right:13%;
+ width:65px;
+ height:65px;
+ border-radius:50%;
+ background:#fff2cb;
+ box-shadow:0 0 25px #ffe4a4,0 0 70px #ffb96b66;
+ opacity:.8;
+ animation:moon 3s ease-in-out infinite alternate;
+}
+
+.heading{
+ position:absolute;
+ top:23%;
+ width:100%;
+ text-align:center;
+ opacity:0;
+ animation:heading 2s ease forwards .5s;
+ z-index:2;
+}
+
+.small{
+ color:#ffcf91;
+ letter-spacing:7px;
+ font:11px Arial,sans-serif;
+ margin-bottom:15px;
+}
+
+h1{
+ font-size:clamp(36px,10vw,49px);
+ line-height:1.15;
+ font-weight:normal;
+ font-style:italic;
+ background:linear-gradient(100deg,#fff0bd,#ffbf67,#fff8dd,#ff9bca);
+ background-size:250% auto;
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent;
+ filter:drop-shadow(0 0 12px #ff9c694d);
+ animation:shine 4s linear infinite;
+}
+
+.line{
+ width:0;
+ height:1px;
+ margin:18px auto 0;
+ background:linear-gradient(90deg,transparent,#ffdb9b,transparent);
+ animation:line 1.5s ease forwards 2s;
+}
+
+.flower{
+ position:absolute;
+ width:270px;
+ height:330px;
+ top:45%;
+ left:50%;
+ transform:translateX(-50%);
+ opacity:0;
+ animation:flowerIn 2s ease forwards 2.1s;
+ filter:drop-shadow(0 0 25px #ff255f20);
+}
+
+svg{width:100%;height:100%;overflow:visible}
+
+.petal{
+ transform-box:fill-box;
+ transform-origin:50% 85%;
+ animation:sway 3.5s ease-in-out infinite alternate;
+}
+
+.p2{animation-delay:.3s}
+.p3{animation-delay:.6s}
+.p4{animation-delay:.9s}
+
+.leaf{
+ transform-box:fill-box;
+ transform-origin:0% 100%;
+ animation:leaf 3s ease-in-out infinite alternate;
+}
+
+.caption{
+ position:absolute;
+ bottom:7%;
+ text-align:center;
+ width:100%;
+ font-size:13px;
+ letter-spacing:2px;
+ color:#f8d8e5;
+ opacity:0;
+ animation:caption 1.5s ease forwards 4s;
+}
+
+.spark{
+ position:absolute;
+ width:4px;height:4px;
+ background:#ffe5ad;
+ border-radius:50%;
+ box-shadow:0 0 10px 3px #ffc76c88;
+ animation:float 5s linear infinite;
+}
+
+@keyframes heading{
+ from{opacity:0;transform:translateY(25px);filter:blur(8px)}
+ to{opacity:1;transform:translateY(0);filter:blur(0)}
+}
+@keyframes flowerIn{
+ 0%{opacity:0;transform:translate(-50%,45px) scale(.65)}
+ 70%{opacity:1;transform:translate(-50%,-5px) scale(1.04)}
+ 100%{opacity:1;transform:translate(-50%,0) scale(1)}
+}
+@keyframes caption{
+ to{opacity:1;transform:translateY(-5px)}
+}
+@keyframes shine{
+ to{background-position:250% center}
+}
+@keyframes line{to{width:180px}}
+@keyframes twinkle{to{opacity:.45}}
+@keyframes moon{to{box-shadow:0 0 40px #ffe4a4,0 0 90px #ffb96b88}}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+@keyframes leaf{from{transform:rotate(-4deg)}to{transform:rotate(5deg)}}
+@keyframes float{
+ 0%{transform:translateY(40px);opacity:0}
+ 20%{opacity:.9}
+ 80%{opacity:.7}
+ 100%{transform:translateY(-90vh);opacity:0}
+}
+
+@media(max-height:650px){
+ .heading{top:12%}
+ .flower{top:34%;width:230px;height:280px}
+ .caption{bottom:3%}
 }
 </style>
 </head>
 
 <body>
-<canvas id="heart"></canvas>
-<div class="message">Good Morning ♡</div>
+<div class="scene">
+ <div class="stars"></div>
+ <div class="moon"></div>
+
+ <div class="heading">
+  <div class="small">A BEAUTIFUL NEW BEGINNING</div>
+  <h1>Good<br>Morning</h1>
+  <div class="line"></div>
+ </div>
+
+ <div class="flower">
+ <svg viewBox="0 0 270 330" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <linearGradient id="stem" x1="0" x2="1">
+   <stop stop-color="#173d2a"/>
+   <stop offset=".5" stop-color="#63a65c"/>
+   <stop offset="1" stop-color="#173d2a"/>
+  </linearGradient>
+  <radialGradient id="red" cx="35%" cy="25%" r="80%">
+   <stop stop-color="#ff879b"/>
+   <stop offset=".35" stop-color="#e51b4d"/>
+   <stop offset=".72" stop-color="#9f092f"/>
+   <stop offset="1" stop-color="#40091f"/>
+  </radialGradient>
+  <linearGradient id="leafG" x1="0" y1="0" x2="1" y2="1">
+   <stop stop-color="#83cf75"/>
+   <stop offset=".45" stop-color="#287743"/>
+   <stop offset="1" stop-color="#103323"/>
+  </linearGradient>
+  <radialGradient id="dew">
+   <stop stop-color="#fff" stop-opacity=".95"/>
+   <stop offset=".35" stop-color="#ffdce9" stop-opacity=".7"/>
+   <stop offset="1" stop-color="#ff739c" stop-opacity=".1"/>
+  </radialGradient>
+ </defs>
+
+ <!-- Stem -->
+ <path d="M133 160 Q145 225 135 310"
+ fill="none" stroke="url(#stem)" stroke-width="8" stroke-linecap="round"/>
+
+ <!-- Leaves -->
+ <g class="leaf">
+  <path d="M138 233 Q95 185 58 211 Q82 254 138 233Z"
+  fill="url(#leafG)" stroke="#74b96b" stroke-width="1"/>
+  <path d="M65 215 Q100 229 134 234" fill="none" stroke="#a2d38a" stroke-width="1.4"/>
+ </g>
+ <g class="leaf">
+  <path d="M137 270 Q169 219 213 235 Q191 276 137 270Z"
+  fill="url(#leafG)" stroke="#74b96b" stroke-width="1"/>
+  <path d="M207 239 Q170 257 139 270" fill="none" stroke="#a2d38a" stroke-width="1.4"/>
+ </g>
+
+ <!-- Outer petals -->
+ <g class="petal p4">
+  <path d="M134 157 C77 169 45 125 72 81
+  C86 56 110 65 130 87 C145 54 179 60 196 88
+  C226 137 185 167 134 157Z"
+  fill="url(#red)" stroke="#ff7994" stroke-width="1.5"/>
+ </g>
+
+ <!-- Side petals -->
+ <g class="petal p3">
+  <path d="M131 151 C88 153 69 122 91 94
+  C105 77 124 92 137 112
+  C149 83 176 89 185 113
+  C198 143 164 163 131 151Z"
+  fill="url(#red)" stroke="#ff9aab" stroke-width="1.5"/>
+ </g>
+
+ <!-- Inner petals -->
+ <g class="petal p2">
+  <path d="M134 143 C109 145 94 124 108 106
+  C120 92 135 108 139 121
+  C149 99 169 109 166 128
+  C164 145 146 153 134 143Z"
+  fill="#bf103c" stroke="#ff91a8" stroke-width="1.5"/>
+ </g>
+
+ <!-- Rose heart -->
+ <g class="petal">
+  <path d="M133 137 C114 134 116 112 130 112
+  C139 112 141 124 137 129
+  C149 111 162 124 154 136
+  C149 145 137 148 133 137Z"
+  fill="#ff5679" stroke="#ffb3c0" stroke-width="1.4"/>
+ </g>
+
+ <!-- Petal highlights -->
+ <path d="M78 95 Q86 75 104 80" fill="none"
+ stroke="#ffc2ce" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+ <path d="M165 77 Q186 78 192 101" fill="none"
+ stroke="#ff9bad" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+ <path d="M106 105 Q113 98 120 106" fill="none"
+ stroke="#ffc0ce" stroke-width="1.5" stroke-linecap="round"/>
+
+ <!-- Dew drops -->
+ <circle cx="88" cy="113" r="4" fill="url(#dew)"/>
+ <circle cx="178" cy="119" r="3.5" fill="url(#dew)"/>
+ <circle cx="109" cy="139" r="2.5" fill="url(#dew)"/>
+ <circle cx="158" cy="101" r="2" fill="url(#dew)"/>
+ <circle cx="145" cy="133" r="2.5" fill="url(#dew)"/>
+
+ <!-- Calyx -->
+ <path d="M111 150 L95 166 L123 159 L136 174 L149 158 L177 165 L157 146Z"
+ fill="#31824a" stroke="#75bb65" stroke-width="1.5"/>
+
+ <!-- Glow -->
+ <ellipse cx="135" cy="320" rx="56" ry="4"
+ fill="#ff9fca" opacity=".3"/>
+ </svg>
+ </div>
+
+ <div class="caption">✦ HAVE A LOVELY DAY ✦</div>
+</div>
 
 <script>
-const canvas=document.getElementById("heart");
-const ctx=canvas.getContext("2d");
-
-let W,H,points=[],stars=[],started=0;
-
-function resize(){
-W=canvas.width=innerWidth*devicePixelRatio;
-H=canvas.height=innerHeight*devicePixelRatio;
-canvas.style.width=innerWidth+"px";
-canvas.style.height=innerHeight+"px";
-ctx.setTransform(1,0,0,1,0,0);
-ctx.scale(devicePixelRatio,devicePixelRatio);
-W=innerWidth;
-H=innerHeight;
-createHeart();
-createStars();
+const scene=document.querySelector('.scene');
+for(let i=0;i<24;i++){
+ const s=document.createElement('span');
+ s.className='spark';
+ s.style.left=Math.random()*100+'%';
+ s.style.top=(45+Math.random()*55)+'%';
+ s.style.animationDelay=(Math.random()*5)+'s';
+ s.style.animationDuration=(4+Math.random()*5)+'s';
+ scene.appendChild(s);
 }
-
-function createHeart(){
-points=[];
-let scale=Math.min(W/36,H/43)*0.83;
-let cx=W/2,cy=H*0.43;
-
-for(let y=-1.35;y<=1.35;y+=0.055){
-for(let x=-1.5;x<=1.5;x+=0.055){
-let a=x*x+y*y-1;
-if(a*a*a-x*x*y*y*y<=0){
-points.push({
-x:cx+x*16*scale,
-y:cy-y*16*scale,
-ox:Math.random()*W,
-oy:Math.random()*H,
-delay:Math.random()*1800,
-phase:Math.random()*6.28,
-size:Math.random()*0.8+0.6
-});
-}
-}
-}
-}
-
-function createStars(){
-stars=[];
-for(let i=0;i<100;i++){
-stars.push({
-x:Math.random()*W,
-y:Math.random()*H,
-r:Math.random()*1.5+0.3,
-a:Math.random()
-});
-}
-}
-
-function draw(t){
-ctx.clearRect(0,0,W,H);
-
-for(const s of stars){
-ctx.beginPath();
-ctx.fillStyle=`rgba(255,125,203,${0.15+Math.abs(Math.sin(t/900+s.a))*0.55})`;
-ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-ctx.fill();
-}
-
-const elapsed=t-started;
-
-for(const p of points){
-let progress=Math.min(1,Math.max(0,(elapsed-p.delay)/1700));
-progress=progress*progress*(3-2*progress);
-
-let x=p.ox+(p.x-p.ox)*progress;
-let y=p.oy+(p.y-p.oy)*progress;
-
-let pulse=1+Math.sin(t/650+p.phase)*0.035;
-x=W/2+(x-W/2)*pulse;
-y=H*0.43+(y-H*0.43)*pulse;
-
-ctx.font=`bold ${Math.max(5,Math.min(8,W/42))}px Georgia`;
-ctx.textAlign="center";
-ctx.textBaseline="middle";
-ctx.shadowBlur=progress?5:0;
-ctx.shadowColor="#ff168d";
-ctx.fillStyle=`rgba(255,${105+Math.floor(Math.random()*35)},${190+Math.floor(Math.random()*55)},${0.5+progress*0.5})`;
-ctx.fillText("Good Morning",x,y);
-}
-
-ctx.shadowBlur=0;
-requestAnimationFrame(draw);
-}
-
-resize();
-started=performance.now();
-requestAnimationFrame(draw);
-addEventListener("resize",resize);
 </script>
 </body>
 </html>
