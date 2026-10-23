@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Good Morning ❤️</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:radial-gradient(ellipse at 50% 46%,#29102f 0%,#100819 48%,#02030a 100%);color:white;font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center}
+canvas{position:absolute;inset:0;width:100%;height:100%}
+.content{position:relative;z-index:2;text-align:center;width:100%;padding:18px}
+h1{font-size:clamp(26px,7vw,44px);letter-spacing:.12em;margin:0 0 10px;color:#fff0cb;text-shadow:0 0 8px #ff8aca,0 0 22px #ff2e98;opacity:0;animation:showTitle 1s ease 4.5s forwards}
+@keyframes showTitle{to{opacity:1}}
+.heart-wrap{width:min(88vw,430px);height:min(82vw,400px);margin:auto}
+svg{width:100%;height:100%;overflow:visible}
+.note{font-size:12px;letter-spacing:.28em;color:#ffd8ef;opacity:0;animation:showTitle 1s ease 5s forwards}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="content">
+<h1>GOOD MORNING</h1>
+<div class="heart-wrap"><svg id="heart" viewBox="0 0 400 370"></svg></div>
+<div class="note">HAVE A BEAUTIFUL DAY</div>
+</div>
+<script>
+const svg=document.getElementById('heart'),ns='http://www.w3.org/2000/svg';
+const heart=t=>({x:200+16*Math.pow(Math.sin(t),3)*7.7,y:178-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*7.7});
+const colors=['#ff2d91','#ff527f','#ff8bd0','#ffc1e8','#d56aff','#ffffff'];
+// Points are revealed one by one, tracing the heart outline just like a point-drawing animation.
+const outlineCount=900, outline=[];
+for(let i=0;i<outlineCount;i++){
+ const p=heart(i/outlineCount*Math.PI*2);
+ outline.push({x:p.x+(Math.random()-.5)*2.2,y:p.y+(Math.random()-.5)*2.2,c:colors[Math.floor(Math.random()*colors.length)],r:.65+Math.random()*1.45});
+}
+const inner=[];
+for(let i=0;i<1350;i++){
+ const t=Math.random()*Math.PI*2,s=Math.sqrt(Math.random())*.91,p=heart(t);
+ inner.push({x:200+(p.x-200)*s+(Math.random()-.5)*2,y:178+(p.y-178)*s+(Math.random()-.5)*2,c:colors[Math.floor(Math.random()*colors.length)],r:.45+Math.random()*1.35});
+}
+let dots=[],start=performance.now(),duration=4100;
+function addDot(p,delay){
+ const c=document.createElementNS(ns,'circle');
+ c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',p.r);
+ c.setAttribute('fill',p.c);c.setAttribute('opacity','0');
+ c.style.filter='drop-shadow(0 0 3px '+p.c+')';
+ svg.appendChild(c);dots.push({el:c,delay});
+}
+outline.forEach((p,i)=>addDot(p,i/outlineCount*duration));
+inner.forEach((p,i)=>addDot(p,900+Math.random()*3100));
+// A moving bright point leads the drawing
+const lead=document.createElementNS(ns,'circle');lead.setAttribute('r','4');lead.setAttribute('fill','#fff');lead.style.filter='drop-shadow(0 0 9px #ff4aa9)';svg.appendChild(lead);
+function animate(now){
+ const elapsed=now-start;
+ dots.forEach((d,i)=>{if(elapsed>=d.delay){const fade=Math.min(1,(elapsed-d.delay)/160);d.el.setAttribute('opacity',(.25+.75*fade).toFixed(2));}});
+ const progress=Math.min(1,elapsed/duration),p=heart(progress*Math.PI*2);
+ lead.setAttribute('cx',p.x);lead.setAttribute('cy',p.y);lead.setAttribute('opacity',progress<1?1:0);
+ if(progress<1)requestAnimationFrame(animate);else{
+   lead.setAttribute('opacity','0');
+   // Keep a gentle heartbeat after all the points have formed.
+   svg.animate([{transform:'scale(.98)'},{transform:'scale(1.035)'},{transform:'scale(.98)'}],{duration:1700,iterations:Infinity,easing:'ease-in-out'});
+ }
+}
+requestAnimationFrame(animate);
+const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');let stars=[];
+function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);stars=Array.from({length:65},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.4+.3,a:Math.random(),v:Math.random()*.012+.003}));}
+function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const s of stars){s.a+=s.v;if(s.a>1||s.a<.15)s.v*=-1;ctx.globalAlpha=s.a;ctx.fillStyle='#ffd9f0';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;requestAnimationFrame(draw)}
+addEventListener('resize',resize);resize();draw();
+</script>
+</body></html>
